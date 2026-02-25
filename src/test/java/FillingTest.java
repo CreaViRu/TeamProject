@@ -34,14 +34,13 @@ public class FillingTest {
         try (var writer = Files.newBufferedWriter(path)) {
             String joinedString = String.join("\n", expectedCars);
             writer.write(joinedString);
-
-            FillingStrategy strategy = new FileFillingStrategy(fileName);
-            List<Car> cars = strategy.fill(10);
-
-            assertEquals(expectedCars.length, cars.size(), "Size must be equal to " + expectedCars.length);
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+
+        FillingStrategy strategy = new FileFillingStrategy(fileName);
+        List<Car> cars = strategy.fill(10);
+
+        assertEquals(expectedCars.length, cars.size(), "Size must be equal to " + expectedCars.length);
     }
 }
