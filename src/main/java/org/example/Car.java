@@ -42,6 +42,18 @@ public class Car implements Comparable<Car> {
         }
     }
 
+    public int getPower() {
+        return power;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
     @Override
     public int compareTo(Car o) {
 

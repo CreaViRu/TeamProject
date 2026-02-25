@@ -1,7 +1,6 @@
 package org.example.data;
 
 import org.example.Car;
-
 import java.util.ArrayList;
 import java.util.List;
 
