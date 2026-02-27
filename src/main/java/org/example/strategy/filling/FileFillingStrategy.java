@@ -1,6 +1,6 @@
 package org.example.strategy.filling;
 
-import org.example.Car;
+import org.example.data.model.Car;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

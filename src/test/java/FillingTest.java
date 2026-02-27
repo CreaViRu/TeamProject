@@ -1,4 +1,4 @@
-import org.example.Car;
+import org.example.data.model.Car;
 import org.example.strategy.filling.FileFillingStrategy;
 import org.example.strategy.filling.FillingStrategy;
 import org.example.strategy.filling.RandomFillingStrategy;
