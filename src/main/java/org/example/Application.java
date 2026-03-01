@@ -2,8 +2,11 @@ package org.example;
 
 import org.example.data.DataStorage;
 import org.example.menu.MenuCommand;
+import org.example.sorting.BubbleSortStrategy;
+import org.example.sorting.StrategySort;
 import org.example.strategy.filling.*;
 import org.example.util.InputValidator;
+
 import java.util.Scanner;
 
 public class Application {
@@ -12,11 +15,15 @@ public class Application {
     private final InputValidator validator;
     private final Scanner scanner;
 
+    private StrategySort sortingStrategy;
+
+
     public Application() {
         this.isRunning = false;
         this.scanner = new Scanner(System.in);
         this.validator = new InputValidator(scanner);
         this.dataStorage = new DataStorage();
+        this.sortingStrategy = new BubbleSortStrategy();
     }
 
     public void start() {
@@ -149,14 +156,16 @@ public class Application {
     }
 
     private void handleSort(String field) {
-        if (dataStorage.isEmpty()) {
+        if (dataStorage.getCars().isEmpty()) {
             System.out.println("Ошибка: сначала заполните данные!");
             return;
         }
-
         System.out.println("\n--- Сортировка по " + field + " ---");
-
-        System.out.println("Функция сортировки будет добавлена позже");
+        sortingStrategy.sort(dataStorage.getCars(), field);
+        System.out.println("Данные отсортированы:");
+        for (Car car : dataStorage.getCars()) {
+            System.out.println(car);
+        }
     }
 
     private void handleSearch() {
