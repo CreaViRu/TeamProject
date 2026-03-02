@@ -1,106 +1,59 @@
 package org.example;
 
 import org.example.data.DataStorage;
+import org.example.menu.Menu;
+import org.example.menu.MenuAction;
 import org.example.menu.MenuCommand;
+import org.example.menu.MenuNavigator;
+import org.example.menu.interfaces.InputReader;
+import org.example.menu.interfaces.Renderer;
+import org.example.menu.reader.ConsoleReader;
+import org.example.menu.renderer.ConsoleRenderer;
 import org.example.strategy.filling.*;
 import org.example.util.InputValidator;
+
 import java.util.Scanner;
 
 public class Application {
+    private boolean isRunning = false;
+    private final DataStorage dataStorage = new DataStorage();
+    private final Scanner scanner = new Scanner(System.in);
+    private final InputValidator validator = new InputValidator(scanner);
+    private final InputReader inputReader = new ConsoleReader(scanner);
+    private final Renderer renderer = new ConsoleRenderer();
+    private final MenuNavigator menuNavigator = new MenuNavigator(inputReader, renderer, initMenu(), this::stop);
 
-    private boolean isRunning;
-    private final DataStorage dataStorage;
-    private final InputValidator validator;
-    private final Scanner scanner;
 
-    public Application() {
-        this.isRunning = false;
-        this.scanner = new Scanner(System.in);
-        this.validator = new InputValidator(scanner);
-        this.dataStorage = new DataStorage();
+    public Menu initMenu() {
+        var mainMenu = new Menu("Sorting program", true);
+        var fillingMenu = new Menu("Filling method");
+
+        mainMenu.add(fillingMenu);
+        mainMenu.add(new MenuAction("Show data", this::handleDisplay));
+//        mainMenu.add(new MenuAction("Sort", this::handleSort)); // Not implemented
+
+        fillingMenu.add(new MenuAction("Random", this::handleRandomFill));
+        fillingMenu.add(new MenuAction("File", this::handleFileFill));
+        fillingMenu.add(new MenuAction("Manual", this::handleManualFill));
+
+        return mainMenu;
     }
 
     public void start() {
         isRunning = true;
-        printWelcomeMessage();
+//        printWelcomeMessage();
         mainLoop();
     }
 
     public void stop() {
         isRunning = false;
         scanner.close();
-        System.out.println("Программа завершена. До свидания!");
-    }
-
-    private void printWelcomeMessage() {
-        System.out.println("=====================================");
-        System.out.println("   Программа сортировки автомобилей   ");
-        System.out.println("=====================================");
-    }
-
-    private void printMenu() {
-        System.out.println("\n--- Меню ---");
-        System.out.println(MenuCommand.FILL_RANDOM.getCode() + ". " + MenuCommand.FILL_RANDOM.getDescription());
-        System.out.println(MenuCommand.FILL_MANUAL.getCode() + ". " + MenuCommand.FILL_MANUAL.getDescription());
-        System.out.println(MenuCommand.FILL_FILE.getCode() + ". " + MenuCommand.FILL_FILE.getDescription());
-        System.out.println(MenuCommand.DISPLAY.getCode() + ". " + MenuCommand.DISPLAY.getDescription());
-        System.out.println(MenuCommand.SORT_POWER.getCode() + ". " + MenuCommand.SORT_POWER.getDescription());
-        System.out.println(MenuCommand.SORT_MODEL.getCode() + ". " + MenuCommand.SORT_MODEL.getDescription());
-        System.out.println(MenuCommand.SORT_YEAR.getCode() + ". " + MenuCommand.SORT_YEAR.getDescription());
-        System.out.println(MenuCommand.SEARCH.getCode() + ". " + MenuCommand.SEARCH.getDescription());
-        System.out.println(MenuCommand.SAVE_FILE.getCode() + ". " + MenuCommand.SAVE_FILE.getDescription());
-        System.out.println(MenuCommand.EXIT.getCode() + ". " + MenuCommand.EXIT.getDescription());
-        System.out.print("Выберите действие > ");
     }
 
     private void mainLoop() {
         while (isRunning) {
-            printMenu();
-            String userInput = scanner.nextLine().trim();
-
-            MenuCommand command = MenuCommand.fromCode(userInput);
-
-            if (command == null) {
-                System.out.println("Ошибка: команда \"" + userInput + "\" не найдена");
-                continue;
-            }
-
-            executeCommand(command);
-        }
-    }
-
-    private void executeCommand(MenuCommand command) {
-        switch (command) {
-            case EXIT:
-                stop();
-                break;
-            case FILL_RANDOM:
-                handleRandomFill();
-                break;
-            case FILL_MANUAL:
-                handleManualFill();
-                break;
-            case FILL_FILE:
-                handleFileFill();
-                break;
-            case DISPLAY:
-                handleDisplay();
-                break;
-            case SORT_POWER:
-                handleSort("Мощность");
-                break;
-            case SORT_MODEL:
-                handleSort("Модель");
-                break;
-            case SORT_YEAR:
-                handleSort("Год");
-                break;
-            case SEARCH:
-                handleSearch();
-                break;
-            case SAVE_FILE:
-                handleSaveToFile();
-                break;
+            menuNavigator.updateMenu();
+            menuNavigator.handleInput();
         }
     }
 
