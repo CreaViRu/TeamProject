@@ -7,6 +7,7 @@ import org.example.util.InputValidator;
 import java.util.Scanner;
 
 public class Application {
+
     private boolean isRunning;
     private final DataStorage dataStorage;
     private final InputValidator validator;
@@ -73,39 +74,30 @@ public class Application {
             case EXIT:
                 stop();
                 break;
-
             case FILL_RANDOM:
                 handleRandomFill();
                 break;
-
             case FILL_MANUAL:
                 handleManualFill();
                 break;
-
             case FILL_FILE:
                 handleFileFill();
                 break;
-
             case DISPLAY:
                 handleDisplay();
                 break;
-
             case SORT_POWER:
                 handleSort("Мощность");
                 break;
-
             case SORT_MODEL:
                 handleSort("Модель");
                 break;
-
             case SORT_YEAR:
                 handleSort("Год");
                 break;
-
             case SEARCH:
                 handleSearch();
                 break;
-
             case SAVE_FILE:
                 handleSaveToFile();
                 break;
@@ -115,20 +107,16 @@ public class Application {
     private void handleRandomFill() {
         System.out.println("\n--- Случайное заполнение ---");
         int size = validator.readInt("Введите количество автомобилей [1-100]: ", 1, 100);
-
         FillingStrategy strategy = new RandomFillingStrategy();
         dataStorage.setCars(strategy.fill(size));
-
         System.out.println("Текущее количество автомобилей: " + dataStorage.size());
     }
 
     private void handleManualFill() {
         System.out.println("\n--- Ручное заполнение ---");
         int size = validator.readInt("Введите количество автомобилей [1-20]: ", 1, 20);
-
         FillingStrategy strategy = new ManualFillingStrategy(validator);
         dataStorage.setCars(strategy.fill(size));
-
         System.out.println("Текущее количество автомобилей: " + dataStorage.size());
     }
 
@@ -136,10 +124,8 @@ public class Application {
         System.out.println("\n--- Заполнение из файла ---");
         String filename = validator.readString("Введите имя файла: ", false);
         int maxSize = validator.readInt("Максимальное количество для загрузки [1-100]: ", 1, 100);
-
         FillingStrategy strategy = new FileFillingStrategy(filename);
         dataStorage.setCars(strategy.fill(maxSize));
-
         System.out.println("Загружено автомобилей: " + dataStorage.size());
     }
 
@@ -153,9 +139,7 @@ public class Application {
             System.out.println("Ошибка: сначала заполните данные!");
             return;
         }
-
         System.out.println("\n--- Сортировка по " + field + " ---");
-
         System.out.println("Функция сортировки будет добавлена позже");
     }
 
@@ -164,9 +148,7 @@ public class Application {
             System.out.println("Ошибка: сначала заполните данные!");
             return;
         }
-
         System.out.println("\n--- Поиск автомобиля ---");
-
         System.out.println("Функция поиска будет добавлена позже");
     }
 
@@ -175,12 +157,9 @@ public class Application {
             System.out.println("Ошибка: нет данных для сохранения!");
             return;
         }
-
         System.out.println("\n--- Сохранение в файл ---");
         String filename = validator.readString("Введите имя файла для сохранения: ", false);
         boolean append = validator.readYesNo("Добавить к существующему файлу?");
-
-
         System.out.println("Функция сохранения будет добавлена позже");
     }
 

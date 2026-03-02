@@ -2,21 +2,30 @@ package org.example.strategy.filling;
 
 import org.example.data.model.Car;
 import org.example.util.InputValidator;
+import org.example.validation.CarValidator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManualFillingStrategy implements FillingStrategy {
+
     private final InputValidator validator;
+    private final CarValidator carValidator;
 
     public ManualFillingStrategy(InputValidator validator) {
         this.validator = validator;
+        this.carValidator = CarValidator.standardValidator();
+    }
+
+    public ManualFillingStrategy(InputValidator validator, CarValidator carValidator) {
+        this.validator = validator;
+        this.carValidator = carValidator;
     }
 
     @Override
     public List<Car> fill(int size) {
         List<Car> cars = new ArrayList<>();
 
-        System.out.println("\n=== Ввод данных для " + size + " автомобилей ===");
+        System.out.println("\n --- Ввод данных для " + size + " автомобилей ---");
 
         for (int i = 0; i < size; i++) {
             System.out.println("\nАвтомобиль #" + (i + 1));
@@ -32,6 +41,9 @@ public class ManualFillingStrategy implements FillingStrategy {
                             .setPower(power)
                             .setYear(year)
                             .build();
+
+                    // ВАЛИДАЦИЯ
+                    carValidator.validate(car);
 
                     cars.add(car);
                     break;

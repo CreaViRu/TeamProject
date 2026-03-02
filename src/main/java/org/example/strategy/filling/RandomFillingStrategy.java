@@ -1,6 +1,8 @@
 package org.example.strategy.filling;
 
 import org.example.data.model.Car;
+import org.example.validation.CarValidator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,9 +22,12 @@ public class RandomFillingStrategy implements FillingStrategy {
         for (int i = 0; i < size; i++) {
             Car car = new Car.Builder()
                     .setModel(MODELS[random.nextInt(MODELS.length)])
-                    .setPower(50 + random.nextInt(301)) // 50-350 л.с.
-                    .setYear(2000 + random.nextInt(24)) // 2000-2023
+                    .setPower(50 + random.nextInt(301))
+                    .setYear(2000 + random.nextInt(24))
                     .build();
+
+
+            CarValidator.standardValidator().validate(car);
             cars.add(car);
         }
 

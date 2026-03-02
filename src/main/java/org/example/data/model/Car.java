@@ -34,10 +34,7 @@ public class Car implements Comparable<Car> {
         }
 
         public Car build() {
-            if (model == null || model.isEmpty())
-                throw new IllegalArgumentException();
-            if (power <= 0) throw new IllegalArgumentException();
-            if (year <= 0) throw new IllegalArgumentException();
+
             return new Car(this);
         }
     }
