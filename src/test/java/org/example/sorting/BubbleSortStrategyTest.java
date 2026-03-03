@@ -64,4 +64,35 @@ class BubbleSortStrategyTest {
         strategy.sort(single, "Мощность");
         assertEquals(1, single.size());
     }
+
+    @Test
+    void noEvenValues() {
+        StrategySort evenSortStrategy = new NaturalBubbleSortStrategy();
+
+        List<Car> cars = new ArrayList<>();
+        cars.add(new Car.Builder().setPower(151).setModel("A").setYear(2020).build());
+        cars.add(new Car.Builder().setPower(133).setModel("B").setYear(2021).build());
+
+        evenSortStrategy.sort(cars, "Мощность");
+
+        assertEquals(151, cars.get(0).getPower());
+        assertEquals(133, cars.get(1).getPower());
+    }
+
+    @Test
+    void allEvenValues() {
+        StrategySort evenSortStrategy = new NaturalBubbleSortStrategy();
+
+        List<Car> cars = new ArrayList<>();
+        cars.add(new Car.Builder().setPower(300).setModel("C").setYear(2020).build());
+        cars.add(new Car.Builder().setPower(200).setModel("D").setYear(2021).build());
+        cars.add(new Car.Builder().setPower(100).setModel("E").setYear(2019).build());
+
+        evenSortStrategy.sort(cars, "Мощность");
+
+        assertEquals(100, cars.get(0).getPower());
+        assertEquals(200, cars.get(1).getPower());
+        assertEquals(300, cars.get(2).getPower());
+    }
+
 }

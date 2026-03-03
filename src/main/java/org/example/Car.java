@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Car implements Comparable<Car> {
     private int power;
@@ -52,6 +53,22 @@ public class Car implements Comparable<Car> {
 
     public int getYear() {
         return year;
+    }
+
+// метка
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return power == car.power &&
+                year == car.year &&
+                Objects.equals(model, car.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(power, model, year);
     }
 
     @Override
