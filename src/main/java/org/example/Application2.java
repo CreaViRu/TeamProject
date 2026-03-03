@@ -4,12 +4,6 @@ import org.example.data.DataStorage;
 import org.example.data.provider.CommandContext;
 import org.example.data.provider.DataProviderFactory;
 import org.example.data.provider.DataProviderStrategy;
-import org.example.data.provider.FileDataProviderStrategy;
-import org.example.menu.MenuCommand;
-import org.example.strategy.filling.FileFillingStrategy;
-import org.example.strategy.filling.FillingStrategy;
-import org.example.strategy.filling.ManualFillingStrategy;
-import org.example.strategy.filling.RandomFillingStrategy;
 import org.example.util.InputValidator;
 
 import java.util.HashMap;

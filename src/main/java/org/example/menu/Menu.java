@@ -4,7 +4,6 @@ import org.example.menu.interfaces.MenuSwitcher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Menu extends MenuElement {
     private final List<MenuElement> elements = new ArrayList<>();
