@@ -21,8 +21,13 @@ public class ConsoleInputDataProviderStrategy<T> implements DataProviderStrategy
         ArrayList<T> data = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         System.out.println(consoleMessage);
-        String readLine = scanner.nextLine();
-        data.add(parser.parse(readLine));
+        String sourceLine = scanner.nextLine();
+        try {
+            data.add(parser.parse(sourceLine));
+        } catch (InvalidDataException e) {
+            System.out.println(e.getMessage());
+            return provideData(size);
+        }
         return data;
     }
 }

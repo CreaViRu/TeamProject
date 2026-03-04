@@ -18,23 +18,22 @@ public class Application2 {
     private final Map<String, Runnable> handlers;
     private final Map<String, Runnable> dataInputHandlers;
     private CommandContext commandContext;
-    private DataProviderStrategy<Car> fileDataProviderStrategy;
     private final DataProviderStrategy<Car> randomData;
     private final DataProviderStrategy<Car> readingFromConsole;
-    private final Parser<Car> parser = new CarParser();
-    private final Randomizer<Car> carRandomizer;
+    private final Parser<Car> parser;
 
     public Application2() {
         this.isRunning = false;
         this.scanner = new Scanner(System.in);
         handlers = new HashMap<>();
         this.validator = new InputValidator(scanner);
+        this.parser = new CarParser(validator);
         this.dataStorage = new DataStorage();
         commandContext = CommandContext.APP;
         dataInputHandlers = new HashMap<>();
-        this.carRandomizer = new CarRandomizer(new String[]{"BMW", "Toyota", "Lada", "Mercedes", "Aurus"});
+        Randomizer<Car> carRandomizer = new CarRandomizer(new String[]{"BMW", "Toyota", "Lada", "Mercedes", "Aurus"});
         randomData = DataProviderFactory.createRandomDataProvider(carRandomizer, ENTER_VEHICLE_CONSOLE_MESSAGE);
-        readingFromConsole = DataProviderFactory.createInputDataProvider(parser, ENTER_VEHICLE_CONSOLE_MESSAGE );
+        readingFromConsole = DataProviderFactory.createInputDataProvider(parser, ENTER_VEHICLE_CONSOLE_MESSAGE);
     }
 
     public void start() {

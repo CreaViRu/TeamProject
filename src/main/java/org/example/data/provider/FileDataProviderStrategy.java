@@ -28,7 +28,9 @@ public class FileDataProviderStrategy<T> implements DataProviderStrategy<T> {
                 data.add(parser.parse(line));
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error reading file");
+        } catch (InvalidDataException e) {
+            System.out.println(e.getMessage());
         }
         return data.subList(0, size);
     }

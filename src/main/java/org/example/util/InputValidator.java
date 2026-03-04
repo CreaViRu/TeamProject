@@ -1,8 +1,10 @@
 package org.example.util;
 
+import org.example.data.provider.Validator;
+
 import java.util.Scanner;
 
-public class InputValidator {
+public class InputValidator implements Validator {
     private final Scanner scanner;
 
     public InputValidator(Scanner scanner) {
@@ -52,5 +54,11 @@ public class InputValidator {
             }
             System.out.println("Ошибка: введите 'д' или 'н'");
         }
+    }
+
+    @Override
+    public boolean validate(String source) {
+        // todo logic (встроить сюда свой валидатор, чтобы он работал в парсере, который используется в Data Provider)
+        return false;
     }
 }
