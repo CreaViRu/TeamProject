@@ -17,7 +17,8 @@ public class CustomArrayList<T> extends AbstractList<T> {
     @Override
     public boolean add(T element) {
         if (size >= capacity) {
-            list = Arrays.copyOf(list, list.length * 2);
+            capacity = capacity * 2;
+            list = Arrays.copyOf(list, capacity);
         }
         list[size] = element;
         size++;
@@ -37,7 +38,7 @@ public class CustomArrayList<T> extends AbstractList<T> {
     @Override
     public boolean remove(Object element) {
         for (int i = 0; i < size; i++) {
-            if (element.equals(list[i])) {
+            if (Objects.equals(element, list[i])) {
                 list[i] = null;
                 moveArray(i);
                 size--;
@@ -50,6 +51,7 @@ public class CustomArrayList<T> extends AbstractList<T> {
     @SuppressWarnings("unchecked")
     @Override
     public T remove(int index) {
+        Objects.checkIndex(index, size);
         T temp = (T) list[index];
         list[index] = null;
         moveArray(index);
@@ -66,9 +68,10 @@ public class CustomArrayList<T> extends AbstractList<T> {
     }
 
     private void moveArray(int index) {
-        for (int i = index; i < size; i++) {
+        for (int i = index; i < size - 1; i++) {
             list[i] = list[i + 1];
         }
+        list[size - 1] = null;
     }
 
     @SuppressWarnings("unchecked")
