@@ -1,4 +1,4 @@
-import org.example.Car;
+import org.example.data.model.Car;
 import org.example.data.DataStorage;
 import org.junit.jupiter.api.Test;
 

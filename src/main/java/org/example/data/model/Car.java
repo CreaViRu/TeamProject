@@ -1,4 +1,4 @@
-package org.example;
+package org.example.data.model;
 
 import java.util.Comparator;
 

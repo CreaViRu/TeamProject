@@ -1,6 +1,6 @@
 package org.example.data;
 
-import org.example.Car;
+import org.example.data.model.Car;
 import java.util.ArrayList;
 import java.util.List;
 

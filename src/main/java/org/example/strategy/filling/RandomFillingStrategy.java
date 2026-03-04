@@ -1,6 +1,6 @@
 package org.example.strategy.filling;
 
-import org.example.Car;
+import org.example.data.model.Car;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
