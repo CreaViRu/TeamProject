@@ -2,11 +2,10 @@ package org.example.menu.config;
 
 import org.example.menu.Menu;
 import org.example.menu.actions.MenuActionHandler;
-import org.example.menu.builder.MenuBuilder;
 
 public class MenuConfiguration {
     public static Menu createMainMenu(MenuActionHandler actions) {
-        return new MenuBuilder("Car sorting")
+        return new Menu.Builder("Car sorting", true)
                 .addSubmenu("Filling methods", submenu -> {
                     submenu.addAction("Random filing", actions::handleRandomFill)
                             .addAction("Filling from a file", actions::handleRandomFill)

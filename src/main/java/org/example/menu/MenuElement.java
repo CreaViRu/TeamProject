@@ -11,7 +11,9 @@ public abstract class MenuElement {
 
     public String getTitle() {
         return title;
-    };
+    }
+
+    ;
 
     abstract void select(MenuSwitcher switcher);
 }

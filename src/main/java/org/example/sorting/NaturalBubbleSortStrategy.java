@@ -1,7 +1,9 @@
 package org.example.sorting;
 
 import org.example.Car;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NaturalBubbleSortStrategy implements StrategySort {
 
@@ -35,9 +37,12 @@ public class NaturalBubbleSortStrategy implements StrategySort {
 
     private int getFieldValue(Car car, String field) {
         switch (field) {
-            case "Мощность": return car.getPower();
-            case "Год": return car.getYear();
-            default: throw new IllegalArgumentException("Неподдерживаемое поле: " + field);
+            case "Мощность":
+                return car.getPower();
+            case "Год":
+                return car.getYear();
+            default:
+                throw new IllegalArgumentException("Неподдерживаемое поле: " + field);
         }
     }
 
@@ -66,8 +71,12 @@ public class NaturalBubbleSortStrategy implements StrategySort {
                 .setYear(oldCar.getYear());
 
         switch (field) {
-            case "Мощность": builder.setPower(newValue); break;
-            case "Год": builder.setYear(newValue); break;
+            case "Мощность":
+                builder.setPower(newValue);
+                break;
+            case "Год":
+                builder.setYear(newValue);
+                break;
         }
 
         cars.set(index, builder.build());

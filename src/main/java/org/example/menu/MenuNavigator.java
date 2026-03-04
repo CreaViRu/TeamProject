@@ -1,7 +1,7 @@
 package org.example.menu;
 
-import org.example.menu.interfaces.MenuSwitcher;
 import org.example.menu.interfaces.InputReader;
+import org.example.menu.interfaces.MenuSwitcher;
 import org.example.menu.interfaces.Renderer;
 
 import java.util.Stack;

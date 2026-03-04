@@ -9,7 +9,6 @@ import org.example.menu.interfaces.InputReader;
 import org.example.menu.interfaces.Renderer;
 import org.example.menu.reader.ConsoleReader;
 import org.example.menu.renderer.ConsoleRenderer;
-import org.example.strategy.filling.*;
 import org.example.util.InputValidator;
 
 import java.util.Scanner;

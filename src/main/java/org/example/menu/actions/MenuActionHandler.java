@@ -10,7 +10,7 @@ import org.example.util.InputValidator;
 public class MenuActionHandler {
     private final DataStorage dataStorage;
     private final InputValidator inputValidator;
-    
+
     public MenuActionHandler(DataStorage dataStorage, InputValidator inputValidator) {
         this.dataStorage = dataStorage;
         this.inputValidator = inputValidator;

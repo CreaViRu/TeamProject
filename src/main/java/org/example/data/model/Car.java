@@ -52,7 +52,7 @@ public class Car implements Comparable<Car> {
         return year;
     }
 
-// метка
+    // метка
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,13 +73,17 @@ public class Car implements Comparable<Car> {
 
         return compareByFields(this, o, "Мощность");
     }
-    
+
     public static int compareByFields(Car c1, Car c2, String sortField) {
         switch (sortField) {
-            case "Мощность": return Integer.compare(c1.power, c2.power);
-            case "Модель": return c1.model.compareTo(c2.model);
-            case "Год": return Integer.compare(c1.year, c2.year);
-            default: return 0;
+            case "Мощность":
+                return Integer.compare(c1.power, c2.power);
+            case "Модель":
+                return c1.model.compareTo(c2.model);
+            case "Год":
+                return Integer.compare(c1.year, c2.year);
+            default:
+                return 0;
         }
     }
 
@@ -91,6 +95,6 @@ public class Car implements Comparable<Car> {
 
     @Override
     public String toString() {
-        return "Автомобиль (" + "Мощность = " + power +"л.с." + ", Модель = " + model  + ", Год = " + year + ')';
+        return "Автомобиль (" + "Мощность = " + power + "л.с." + ", Модель = " + model + ", Год = " + year + ')';
     }
 }
