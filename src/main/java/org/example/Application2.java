@@ -1,9 +1,8 @@
 package org.example;
 
 import org.example.data.DataStorage;
-import org.example.data.provider.CommandContext;
-import org.example.data.provider.DataProviderFactory;
-import org.example.data.provider.DataProviderStrategy;
+import org.example.data.model.Car;
+import org.example.data.provider.*;
 import org.example.util.InputValidator;
 
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Application2 {
+    private static final String ENTER_VEHICLE_CONSOLE_MESSAGE = "Enter vehicle information in the format \"model\", \"power\", \"year\". For example: BMW, 300, 1999";
     private boolean isRunning;
     private final DataStorage dataStorage;
     private final InputValidator validator;
@@ -18,9 +18,11 @@ public class Application2 {
     private final Map<String, Runnable> handlers;
     private final Map<String, Runnable> dataInputHandlers;
     private CommandContext commandContext;
-    private DataProviderStrategy fileDataProviderStrategy;
-    private final DataProviderStrategy randomData;
-    private final DataProviderStrategy readingFromConsole;
+    private DataProviderStrategy<Car> fileDataProviderStrategy;
+    private final DataProviderStrategy<Car> randomData;
+    private final DataProviderStrategy<Car> readingFromConsole;
+    private final Parser<Car> parser = new CarParser();
+    private final Randomizer<Car> carRandomizer;
 
     public Application2() {
         this.isRunning = false;
@@ -30,8 +32,9 @@ public class Application2 {
         this.dataStorage = new DataStorage();
         commandContext = CommandContext.APP;
         dataInputHandlers = new HashMap<>();
-        randomData = DataProviderFactory.createRandomDataProvider();
-        readingFromConsole = DataProviderFactory.createInputDataProvider();
+        this.carRandomizer = new CarRandomizer(new String[]{"BMW", "Toyota", "Lada", "Mercedes", "Aurus"});
+        randomData = DataProviderFactory.createRandomDataProvider(carRandomizer, ENTER_VEHICLE_CONSOLE_MESSAGE);
+        readingFromConsole = DataProviderFactory.createInputDataProvider(parser, ENTER_VEHICLE_CONSOLE_MESSAGE );
     }
 
     public void start() {
@@ -56,21 +59,21 @@ public class Application2 {
         System.out.println("Enter the number from 1 to 3");
         int size = Integer.parseInt(scanner.nextLine().trim());
         System.out.println("Reading from file");
-        DataProviderStrategy fileDataProvider = DataProviderFactory.createFileDataProvider(fileName);
+        DataProviderStrategy<Car> fileDataProvider = DataProviderFactory.createFileDataProvider(fileName, parser, ENTER_VEHICLE_CONSOLE_MESSAGE);
         System.out.println(fileDataProvider.provideData(size));
         commandContext = CommandContext.APP;
     }
 
     public void randomData() {
         System.out.println("Random list");
-        System.out.println("Enter the number from 1 to 3");
+        System.out.println("Enter the number from 1 to 100");
         int size = Integer.parseInt(scanner.nextLine().trim());
         System.out.println(randomData.provideData(size));
         commandContext = CommandContext.APP;
     }
 
     public void input() {
-        System.out.println("How many cars will be in the list? Enter the number from 1 to 3");
+        System.out.println("How many cars will be in the list? Enter the number from 1 to 50");
         int size = Integer.parseInt(scanner.nextLine().trim());
         System.out.println(readingFromConsole.provideData(size));
         commandContext = CommandContext.APP;
@@ -235,14 +238,13 @@ public class Application2 {
 //        System.out.println("Функция сохранения будет добавлена позже");
 //    }
 
-     static void main(String[] args) {
+    static void main(String[] args) {
         Application2 app = new Application2();
         app.addUserHandler("1", CommandContext.APP, app::stop);
         app.addUserHandler("2", CommandContext.APP, app::enterData);
         app.addUserHandler("1", CommandContext.DATA_INPUT, app::readFromFile);
         app.addUserHandler("2", CommandContext.DATA_INPUT, app::randomData);
         app.addUserHandler("3", CommandContext.DATA_INPUT, app::input);
-        app.start();
         app.start();
     }
 }

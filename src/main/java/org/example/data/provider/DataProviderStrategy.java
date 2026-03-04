@@ -1,11 +1,9 @@
 package org.example.data.provider;
 
-import org.example.data.model.Car;
-
 import java.util.List;
 
-public interface DataProviderStrategy {
+public interface DataProviderStrategy<T> {
 
-    List<Car> provideData(int size);
+    List<T> provideData(int size);
 }
 
