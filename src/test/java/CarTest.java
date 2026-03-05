@@ -24,17 +24,12 @@ public class CarTest {
 
     @Test
     public void testBuilderWithDefaults() {
-
         Car car = new Car.Builder().build();
 
-
         assertNotNull(car, "Car should be created even without parameters");
-
-
         assertNull(car.getModel(), "Model should be null");
         assertEquals(0, car.getPower(), "Power should be 0");
         assertEquals(0, car.getYear(), "Year should be 0");
-
 
         assertThrows(IllegalArgumentException.class, () -> {
             CarValidator.standardValidator().validate(car);
