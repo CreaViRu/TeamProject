@@ -8,6 +8,11 @@ public class CustomArrayList<T> extends AbstractList<T> {
     int capacity;
     private int size = 0;
 
+    public CustomArrayList() {
+        this.capacity = 10;
+        this.list = new Object[capacity];
+    }
+
     public CustomArrayList(int capacity) {
         this.capacity = capacity;
         this.list = new Object[capacity];
