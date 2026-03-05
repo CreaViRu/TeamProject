@@ -4,7 +4,8 @@ import org.example.data.DataStorage;
 import org.example.data.model.Car;
 import org.example.data.provider.*;
 import org.example.util.InputValidator;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -55,13 +56,29 @@ public class Application2 {
     public void readFromFile() {
         System.out.println("Enter the file name");
         String fileName = scanner.nextLine().trim();
+        if (!Files.exists(Path.of(fileName))) {
+            System.out.println("File doesn't exist, try again");
+            readFromFile();
+            return;
+        }
         System.out.println("Enter the number from 1 to 3");
         int size = Integer.parseInt(scanner.nextLine().trim());
+        int newSize = checkFileSize(size);
         System.out.println("Reading from file");
         DataProviderStrategy<Car> fileDataProvider = DataProviderFactory.createFileDataProvider(fileName, parser, ENTER_VEHICLE_CONSOLE_MESSAGE);
-        System.out.println(fileDataProvider.provideData(size));
+        System.out.println(fileDataProvider.provideData(newSize));
         commandContext = CommandContext.APP;
     }
+
+    public int checkFileSize(int size) {
+        if (size < 1 || size > 3) {
+            System.out.println("Number out of bounds, try again from 1 to 3");
+            size = Integer.parseInt(scanner.nextLine().trim());
+            return checkFileSize(size);
+        }
+        return size;
+    }
+
 
     public void randomData() {
         System.out.println("Random list");

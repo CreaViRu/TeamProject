@@ -59,6 +59,6 @@ public class InputValidator implements Validator {
     @Override
     public boolean validate(String source) {
         // todo logic (встроить сюда свой валидатор, чтобы он работал в парсере, который используется в Data Provider)
-        return false;
+        return true;
     }
 }
