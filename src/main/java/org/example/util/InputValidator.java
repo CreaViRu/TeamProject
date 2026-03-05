@@ -59,12 +59,15 @@ public class InputValidator implements Validator {
     @Override
     public boolean validate(String source) {
         try {
+
             String[] parts = source.split(",");
+
 
             if (parts.length != 3) {
                 System.out.println("Ошибка: неверный формат. Нужно: Модель,Мощность,Год");
                 return false;
             }
+
 
             String model = parts[0].trim();
             if (model.isEmpty()) {
@@ -75,6 +78,7 @@ public class InputValidator implements Validator {
                 System.out.println("Ошибка: модель слишком длинная (макс. 50 символов)");
                 return false;
             }
+
 
             try {
                 int power = Integer.parseInt(parts[1].trim());
@@ -87,6 +91,7 @@ public class InputValidator implements Validator {
                 return false;
             }
 
+
             try {
                 int year = Integer.parseInt(parts[2].trim());
                 int currentYear = java.time.Year.now().getValue();
@@ -98,6 +103,7 @@ public class InputValidator implements Validator {
                 System.out.println("Ошибка: год должен быть числом");
                 return false;
             }
+
 
             return true;
 

@@ -28,14 +28,24 @@ public class Application2 {
         this.isRunning = false;
         this.scanner = new Scanner(System.in);
         handlers = new HashMap<>();
+
+
         this.validator = new InputValidator(scanner);
 
+
         this.parser = new CarParser(validator);
+
+
         this.dataStorage = new DataStorage();
+
+
         commandContext = CommandContext.APP;
         dataInputHandlers = new HashMap<>();
 
+
         Randomizer<Car> carRandomizer = new CarRandomizer(new String[]{"BMW", "Toyota", "Lada", "Mercedes", "Aurus"});
+
+
         randomData = DataProviderFactory.createRandomDataProvider(carRandomizer, ENTER_VEHICLE_CONSOLE_MESSAGE);
         readingFromConsole = DataProviderFactory.createInputDataProvider(parser, ENTER_VEHICLE_CONSOLE_MESSAGE);
     }
@@ -63,9 +73,11 @@ public class Application2 {
         int size = Integer.parseInt(scanner.nextLine().trim());
         System.out.println("Reading from file");
 
-        DataProviderStrategy<Car> fileDataProvider = DataProviderFactory.createFileDataProvider(fileName, parser, ENTER_VEHICLE_CONSOLE_MESSAGE);
-        System.out.println(fileDataProvider.provideData(size));
 
+        DataProviderStrategy<Car> fileDataProvider =
+                DataProviderFactory.createFileDataProvider(fileName, parser, ENTER_VEHICLE_CONSOLE_MESSAGE);
+
+        System.out.println(fileDataProvider.provideData(size));
         commandContext = CommandContext.APP;
     }
 
@@ -129,7 +141,7 @@ public class Application2 {
         System.out.print("> ");
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Application2 app = new Application2();
         app.addUserHandler("1", CommandContext.APP, app::stop);
         app.addUserHandler("2", CommandContext.APP, app::enterData);
