@@ -5,7 +5,7 @@ import org.example.sorting.StrategySort;
 import java.util.List;
 
 public class CarSorter {
-    private StrategySort strategy;
+    private final StrategySort strategy;
 
     public CarSorter(StrategySort strategy) {
 

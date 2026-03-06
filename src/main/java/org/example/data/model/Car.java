@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class Car implements Comparable<Car> {
-    private int power;
-    private String model;
-    private int year;
+    private final int power;
+    private final String model;
+    private final int year;
 
     private Car(Builder builder) {
         this.power = builder.power;
