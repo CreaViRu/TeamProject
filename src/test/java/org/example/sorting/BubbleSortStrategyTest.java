@@ -1,6 +1,6 @@
 package org.example.sorting;
 
-import org.example.Car;
+import org.example.data.model.Car;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
