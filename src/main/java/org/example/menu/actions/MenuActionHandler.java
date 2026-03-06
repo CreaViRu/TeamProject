@@ -1,10 +1,6 @@
 package org.example.menu.actions;
 
 import org.example.data.DataStorage;
-import org.example.strategy.filling.FileFillingStrategy;
-import org.example.strategy.filling.FillingStrategy;
-import org.example.strategy.filling.ManualFillingStrategy;
-import org.example.strategy.filling.RandomFillingStrategy;
 import org.example.util.InputValidator;
 
 public class MenuActionHandler {
@@ -19,16 +15,16 @@ public class MenuActionHandler {
     public void handleRandomFill() {
         System.out.println("\n--- Случайное заполнение ---");
         int size = inputValidator.readInt("Введите количество автомобилей [1-100]: ", 1, 100);
-        FillingStrategy strategy = new RandomFillingStrategy();
-        dataStorage.setCars(strategy.fill(size));
+//        FillingStrategy strategy = new RandomFillingStrategy();
+//        dataStorage.setCars(strategy.fill(size));
         System.out.println("Текущее количество автомобилей: " + dataStorage.size());
     }
 
     public void handleManualFill() {
         System.out.println("\n--- Ручное заполнение ---");
         int size = inputValidator.readInt("Введите количество автомобилей [1-20]: ", 1, 20);
-        FillingStrategy strategy = new ManualFillingStrategy(inputValidator);
-        dataStorage.setCars(strategy.fill(size));
+//        FillingStrategy strategy = new ManualFillingStrategy(inputValidator);
+//        dataStorage.setCars(strategy.fill(size));
         System.out.println("Текущее количество автомобилей: " + dataStorage.size());
     }
 
@@ -36,8 +32,8 @@ public class MenuActionHandler {
         System.out.println("\n--- Заполнение из файла ---");
         String filename = inputValidator.readString("Введите имя файла: ", false);
         int maxSize = inputValidator.readInt("Максимальное количество для загрузки [1-100]: ", 1, 100);
-        FillingStrategy strategy = new FileFillingStrategy(filename);
-        dataStorage.setCars(strategy.fill(maxSize));
+//        FillingStrategy strategy = new FileFillingStrategy(filename);
+//        dataStorage.setCars(strategy.fill(maxSize));
         System.out.println("Загружено автомобилей: " + dataStorage.size());
     }
 
