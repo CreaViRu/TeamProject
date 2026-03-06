@@ -1,42 +1,37 @@
 package org.example.data.provider;
 
-import org.example.data.model.Car;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileDataProviderStrategy implements DataProviderStrategy {
-    private final String filePath;
+public class FileDataProviderStrategy<T> implements DataProviderStrategy<T> {
 
-    public FileDataProviderStrategy(String filePath) {
+    private final String filePath;
+    private final Parser<T> parser;
+    private final String consoleMessage;
+
+    public FileDataProviderStrategy(String filePath, Parser<T> parser, String consoleMessage) {
         this.filePath = filePath;
+        this.parser = parser;
+        this.consoleMessage = consoleMessage;
     }
 
     @Override
-    public List<Car> provideData(int size) {
-        ArrayList<Car> carData = new ArrayList<>();
+    public List<T> provideData(int size) {
+        ArrayList<T> data = new ArrayList<>();
         try {
-            System.out.println("Reading data in the following format \"model\", \"wattage\", \"production year\"");
+            System.out.println(consoleMessage);
             BufferedReader bufferedReader = new BufferedReader(new java.io.FileReader(filePath));
             String line;
-            String[] parts;
             while ((line = bufferedReader.readLine()) != null) {
-                parts = line.split(",");
-                String model = parts[0];
-                int wattage = Integer.parseInt(parts[1].trim());
-                int productionYear = Integer.parseInt(parts[2].trim());
-                Car car = new Car.Builder()
-                        .setModel(model)
-                        .setPower(wattage)
-                        .setYear(productionYear)
-                        .build();
-                carData.add(car);
+                data.add(parser.parse(line));
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error reading file");
+        } catch (InvalidDataException e) {
+            System.out.println(e.getMessage());
         }
-        return carData.subList(0, size);
+        return data.subList(0, size);
     }
 }
