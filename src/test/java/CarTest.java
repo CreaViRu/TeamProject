@@ -1,6 +1,7 @@
 import org.example.data.model.Car;
 import org.example.validation.CarValidator;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CarTest {
