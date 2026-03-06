@@ -1,5 +1,6 @@
 import org.example.data.model.Car;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -23,6 +24,6 @@ public class CarTest {
 
     @Test
     public void testBuilderWithDefaults() {
-        assertThrows(IllegalArgumentException.class, ()-> new Car.Builder().build());
+        assertThrows(IllegalArgumentException.class, () -> new Car.Builder().build());
     }
 }

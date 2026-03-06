@@ -1,5 +1,5 @@
-import org.example.data.model.Car;
 import org.example.data.DataStorage;
+import org.example.data.model.Car;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
