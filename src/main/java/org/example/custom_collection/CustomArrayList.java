@@ -1,12 +1,19 @@
 package org.example.custom_collection;
 
-import java.util.*;
+import java.util.AbstractList;
+import java.util.Arrays;
+import java.util.Objects;
 
 
 public class CustomArrayList<T> extends AbstractList<T> {
     private Object[] list;
     int capacity;
     private int size = 0;
+
+    public CustomArrayList() {
+        this.capacity = 10;
+        this.list = new Object[capacity];
+    }
 
     public CustomArrayList(int capacity) {
         this.capacity = capacity;

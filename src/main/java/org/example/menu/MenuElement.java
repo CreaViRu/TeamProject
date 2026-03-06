@@ -13,8 +13,6 @@ public abstract class MenuElement {
         return title;
     }
 
-    ;
-
     abstract void select(MenuSwitcher switcher);
 }
 
