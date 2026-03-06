@@ -22,10 +22,10 @@ public class Menu extends MenuElement {
         private boolean isRoot = false;
 
         public Builder(String title) {
-            this(title, false);
+            this(title, true);
         }
 
-        public Builder(String title, boolean isRoot) {
+        private Builder(String title, boolean isRoot) {
             this.title = title;
             this.isRoot = isRoot;
         }
@@ -36,7 +36,7 @@ public class Menu extends MenuElement {
         }
 
         public Builder addSubmenu(String title, Consumer<Builder> submenuConfig) {
-            Builder submenuBuilder = new Builder(title);
+            Builder submenuBuilder = new Builder(title, false);
             submenuConfig.accept(submenuBuilder);
             elements.add(submenuBuilder.build());
             return this;
