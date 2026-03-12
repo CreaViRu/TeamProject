@@ -1,3 +1,0 @@
-Toyota Camry,150,2020
-BMW X5,300,2021
-Audi A4,200,2019

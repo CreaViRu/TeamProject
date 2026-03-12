@@ -1,23 +1,26 @@
 package org.example.data;
 
 import org.example.data.model.Car;
+import org.example.sorting.ParitySortStrategy;
+import org.example.sorting.StrategySort;
+import org.example.util.CustomArrayList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
+import java.util.function.ToIntFunction;
 
 public class DataStorage {
-    private List<Car> cars;
+    private final CustomArrayList<Car> cars;
 
     public DataStorage() {
-        this.cars = new ArrayList<>();
+        this.cars = new CustomArrayList<>();
     }
 
-    public List<Car> getCars() {
-        return cars;
+    public void sort(StrategySort method, Comparator<Car> comparator) {
+        method.sort(cars, comparator);
     }
 
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
+    public void sortWithParity(ParitySortStrategy method, ToIntFunction<Car> fieldExtractor) {
+        method.sort(cars, fieldExtractor);
     }
 
     public void addCar(Car car) {
@@ -43,7 +46,6 @@ public class DataStorage {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\n=== Список автомобилей ===\n");
         for (int i = 0; i < cars.size(); i++) {
             sb.append(i + 1).append(". ").append(cars.get(i)).append("\n");
         }

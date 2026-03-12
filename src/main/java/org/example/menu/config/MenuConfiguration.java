@@ -1,5 +1,6 @@
 package org.example.menu.config;
 
+import org.example.data.model.Car;
 import org.example.menu.Menu;
 import org.example.menu.actions.MenuActionHandler;
 
@@ -12,8 +13,29 @@ public class MenuConfiguration {
                             .addAction("Manual filling", actions::handleManualFill);
                 })
                 .addAction("Show data", actions::handleDisplay)
-//                .addAction("Sort", actions::handleSort)
-                .addAction("Find car", actions::handleSearch)
+                .addSubmenu("Sorting", sortingMenu -> {
+                    sortingMenu.addSubmenu("Bubble sort", (bubbleMenu) -> {
+                        bubbleMenu.addAction("By default", () -> {
+                                    actions.handleBubbleSort(Car.byDefault());
+                                })
+                                .addAction("By model", () -> {
+                                    actions.handleBubbleSort(Car.byModel());
+                                })
+                                .addAction("By power", () -> {
+                                    actions.handleBubbleSort(Car.byPower());
+                                })
+                                .addAction("By year", () -> {
+                                    actions.handleBubbleSort(Car.byYear());
+                                });
+                    }).addSubmenu("Natural Bubble sort for Even", (naturalSortMenu) -> {
+                        naturalSortMenu.addAction("By power", () -> {
+                                    actions.handleNaturalSort(Car::getPower);
+                                })
+                                .addAction("By year", () -> {
+                                    actions.handleNaturalSort(Car::getYear);
+                                });
+                    });
+                })
                 .addAction("Save to file", actions::handleSaveToFile)
                 .build();
     }

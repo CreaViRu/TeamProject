@@ -1,6 +1,7 @@
 package org.example.util;
 
 import org.example.data.provider.Validator;
+
 import java.util.Scanner;
 
 public class InputValidator implements Validator {

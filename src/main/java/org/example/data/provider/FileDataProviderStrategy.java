@@ -1,9 +1,10 @@
 package org.example.data.provider;
 
+import org.example.util.CustomArrayList;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FileDataProviderStrategy<T> implements DataProviderStrategy<T> {
 
@@ -18,8 +19,8 @@ public class FileDataProviderStrategy<T> implements DataProviderStrategy<T> {
     }
 
     @Override
-    public List<T> provideData(int size) {
-        ArrayList<T> data = new ArrayList<>();
+    public CustomArrayList<T> provideData(int size) {
+        CustomArrayList<T> data = new CustomArrayList<>();
         try {
             System.out.println(consoleMessage);
             BufferedReader bufferedReader = new BufferedReader(new java.io.FileReader(filePath));
@@ -32,6 +33,6 @@ public class FileDataProviderStrategy<T> implements DataProviderStrategy<T> {
         } catch (InvalidDataException e) {
             System.out.println(e.getMessage());
         }
-        return data.subList(0, size);
+        return data;
     }
 }

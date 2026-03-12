@@ -1,9 +1,9 @@
 package org.example.data.provider;
 
-import java.util.List;
+import org.example.util.CustomArrayList;
 
 public interface DataProviderStrategy<T> {
 
-    List<T> provideData(int size);
+    CustomArrayList<T> provideData(int size);
 }
 

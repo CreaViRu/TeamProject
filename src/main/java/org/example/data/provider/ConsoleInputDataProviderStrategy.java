@@ -1,7 +1,8 @@
 package org.example.data.provider;
 
+import org.example.util.CustomArrayList;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleInputDataProviderStrategy<T> implements DataProviderStrategy<T> {
@@ -15,8 +16,8 @@ public class ConsoleInputDataProviderStrategy<T> implements DataProviderStrategy
     }
 
     @Override
-    public List<T> provideData(int size) {
-        ArrayList<T> data = new ArrayList<>();
+    public CustomArrayList<T> provideData(int size) {
+        CustomArrayList<T> data = new CustomArrayList<>();
         Scanner scanner = new Scanner(System.in);
         System.out.println(consoleMessage);
         String sourceLine = scanner.nextLine();

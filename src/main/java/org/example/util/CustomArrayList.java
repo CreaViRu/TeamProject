@@ -1,4 +1,4 @@
-package org.example.custom_collection;
+package org.example.util;
 
 import java.util.AbstractList;
 import java.util.Arrays;

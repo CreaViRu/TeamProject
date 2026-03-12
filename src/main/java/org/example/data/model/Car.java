@@ -14,6 +14,14 @@ public class Car implements Comparable<Car> {
         this.year = builder.year;
     }
 
+    @Override
+    public int compareTo(Car o) {
+        Comparator<Car> comparator = Comparator.comparing(Car::getModel)
+                .thenComparing(Car::getPower)
+                .thenComparing(Car::getYear);
+        return comparator.compare(this, o);
+    }
+
     public static class Builder {
         private int power;
         private String model;
@@ -67,34 +75,25 @@ public class Car implements Comparable<Car> {
     public int hashCode() {
         return Objects.hash(power, model, year);
     }
-
-    @Override
-    public int compareTo(Car o) {
-
-        return compareByFields(this, o, "Мощность");
-    }
-
-    public static int compareByFields(Car c1, Car c2, String sortField) {
-        switch (sortField) {
-            case "Мощность":
-                return Integer.compare(c1.power, c2.power);
-            case "Модель":
-                return c1.model.compareTo(c2.model);
-            case "Год":
-                return Integer.compare(c1.year, c2.year);
-            default:
-                return 0;
-        }
-    }
-
-
-    public static Comparator<Car> getComparator(String field) {
-
-        return (c1, c2) -> compareByFields(c1, c2, field);
-    }
-
+    
     @Override
     public String toString() {
         return "Автомобиль (" + "Мощность = " + power + "л.с." + ", Модель = " + model + ", Год = " + year + ')';
+    }
+
+    public static Comparator<Car> byDefault() {
+        return Comparator.naturalOrder();
+    }
+
+    public static Comparator<Car> byPower() {
+        return Comparator.comparingInt(Car::getPower);
+    }
+
+    public static Comparator<Car> byModel() {
+        return Comparator.comparing(Car::getModel);
+    }
+
+    public static Comparator<Car> byYear() {
+        return Comparator.comparingInt(Car::getYear);
     }
 }

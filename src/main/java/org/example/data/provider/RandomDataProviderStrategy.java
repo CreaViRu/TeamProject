@@ -1,8 +1,8 @@
 package org.example.data.provider;
 
-import java.util.ArrayList;
+import org.example.util.CustomArrayList;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class RandomDataProviderStrategy<T> implements DataProviderStrategy<T> {
 
@@ -15,9 +15,9 @@ public class RandomDataProviderStrategy<T> implements DataProviderStrategy<T> {
     }
 
     @Override
-    public List<T> provideData(int size) {
+    public CustomArrayList<T> provideData(int size) {
         System.out.println(consoleMessage);
-        ArrayList<T> data = new ArrayList<>();
+        CustomArrayList<T> data = new CustomArrayList<>();
         for (int i = 0; i < size; i++) {
             data.add(randomizer.randomizeData());
         }

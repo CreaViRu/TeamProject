@@ -1,7 +1,17 @@
 package org.example.menu.actions;
 
 import org.example.data.DataStorage;
+import org.example.data.model.Car;
+import org.example.sorting.BubbleSortStrategy;
+import org.example.sorting.NaturalBubbleSortForEvenStrategy;
 import org.example.util.InputValidator;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Comparator;
+import java.util.function.ToIntFunction;
 
 public class MenuActionHandler {
     private final DataStorage dataStorage;
@@ -42,22 +52,22 @@ public class MenuActionHandler {
         System.out.println(dataStorage);
     }
 
-    public void handleSort(String field) {
+    public void handleBubbleSort(Comparator<Car> comparator) {
         if (dataStorage.isEmpty()) {
             System.out.println("Ошибка: сначала заполните данные!");
             return;
         }
-        System.out.println("\n--- Сортировка по " + field + " ---");
-        System.out.println("Функция сортировки будет добавлена позже");
+
+        dataStorage.sort(new BubbleSortStrategy(), comparator);
     }
 
-    public void handleSearch() {
+    public void handleNaturalSort(ToIntFunction<Car> fieldExtractor) {
         if (dataStorage.isEmpty()) {
             System.out.println("Ошибка: сначала заполните данные!");
             return;
         }
-        System.out.println("\n--- Поиск автомобиля ---");
-        System.out.println("Функция поиска будет добавлена позже");
+
+        dataStorage.sortWithParity(new NaturalBubbleSortForEvenStrategy(), fieldExtractor);
     }
 
     public void handleSaveToFile() {
@@ -65,9 +75,14 @@ public class MenuActionHandler {
             System.out.println("Ошибка: нет данных для сохранения!");
             return;
         }
+
         System.out.println("\n--- Сохранение в файл ---");
         String filename = inputValidator.readString("Введите имя файла для сохранения: ", false);
-        boolean append = inputValidator.readYesNo("Добавить к существующему файлу?");
-        System.out.println("Функция сохранения будет добавлена позже");
+
+        try {
+            Files.write(Paths.get(filename), dataStorage.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("Error appending file: " + e.getMessage());
+        }
     }
 }
