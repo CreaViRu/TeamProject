@@ -1,10 +1,11 @@
-import org.example.Car;
-import org.junit.jupiter.api.DisplayName;
+import org.example.data.model.Car;
+import org.example.validation.CarValidator;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CarTest {
+
     @Test
     public void testBuilderCreatesValidObject() {
         int expectedPower = 800;
@@ -24,6 +25,54 @@ public class CarTest {
 
     @Test
     public void testBuilderWithDefaults() {
-        assertThrows(IllegalArgumentException.class, ()-> new Car.Builder().build());
+        Car car = new Car.Builder().build();
+
+        assertNotNull(car, "Car should be created even without parameters");
+        assertNull(car.getModel(), "Model should be null");
+        assertEquals(0, car.getPower(), "Power should be 0");
+        assertEquals(0, car.getYear(), "Year should be 0");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            CarValidator.standardValidator().validate(car);
+        }, "Validator should throw exception for invalid car");
+    }
+
+    @Test
+    public void testValidatorCatchesInvalidModel() {
+        Car car = new Car.Builder()
+                .setModel("")
+                .setPower(100)
+                .setYear(2020)
+                .build();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            CarValidator.standardValidator().validate(car);
+        }, "Empty model should cause validation error");
+    }
+
+    @Test
+    public void testValidatorCatchesInvalidPower() {
+        Car car = new Car.Builder()
+                .setModel("BMW")
+                .setPower(-10)
+                .setYear(2020)
+                .build();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            CarValidator.standardValidator().validate(car);
+        }, "Negative power should cause validation error");
+    }
+
+    @Test
+    public void testValidatorCatchesInvalidYear() {
+        Car car = new Car.Builder()
+                .setModel("BMW")
+                .setPower(100)
+                .setYear(1800)
+                .build();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            CarValidator.standardValidator().validate(car);
+        }, "Invalid year should cause validation error");
     }
 }
