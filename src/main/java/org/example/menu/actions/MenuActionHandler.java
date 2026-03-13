@@ -2,6 +2,10 @@ package org.example.menu.actions;
 
 import org.example.data.DataStorage;
 import org.example.data.model.Car;
+import org.example.data.provider.CarParser;
+import org.example.data.provider.CarRandomizer;
+import org.example.data.provider.DataProviderFactory;
+import org.example.data.provider.DataProviderStrategy;
 import org.example.sorting.BubbleSortStrategy;
 import org.example.sorting.NaturalBubbleSortForEvenStrategy;
 import org.example.util.InputValidator;
@@ -11,30 +15,40 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.ToIntFunction;
 
 public class MenuActionHandler {
     private final DataStorage dataStorage;
     private final InputValidator inputValidator;
+    private final DataProviderStrategy<Car> randomData;
+    private final CarParser parser;
+    private final DataProviderStrategy<Car> readingFromConsole;
 
     public MenuActionHandler(DataStorage dataStorage, InputValidator inputValidator) {
         this.dataStorage = dataStorage;
         this.inputValidator = inputValidator;
+        this.parser = new CarParser(inputValidator);
+        CarRandomizer randomizer = new CarRandomizer(new String[]{"Aurus", "BMW", "Москвич", "Opel", "Ferrari", "Mercedes-Benz"});
+        this.randomData = DataProviderFactory.createRandomDataProvider(randomizer);
+        this.readingFromConsole = DataProviderFactory.createInputDataProvider(parser);
+
     }
 
     public void handleRandomFill() {
         System.out.println("\n--- Случайное заполнение ---");
         int size = inputValidator.readInt("Введите количество автомобилей [1-100]: ", 1, 100);
-//        FillingStrategy strategy = new RandomFillingStrategy();
-//        dataStorage.setCars(strategy.fill(size));
+        System.out.println(randomData.provideData(size));
+        dataStorage.addAll(randomData.provideData(size));
         System.out.println("Текущее количество автомобилей: " + dataStorage.size());
     }
 
     public void handleManualFill() {
         System.out.println("\n--- Ручное заполнение ---");
         int size = inputValidator.readInt("Введите количество автомобилей [1-20]: ", 1, 20);
-//        FillingStrategy strategy = new ManualFillingStrategy(inputValidator);
-//        dataStorage.setCars(strategy.fill(size));
+        List<Car> cars = readingFromConsole.provideData(size);
+        dataStorage.addAll(cars);
+        System.out.println(cars);
         System.out.println("Текущее количество автомобилей: " + dataStorage.size());
     }
 
@@ -42,8 +56,9 @@ public class MenuActionHandler {
         System.out.println("\n--- Заполнение из файла ---");
         String filename = inputValidator.readString("Введите имя файла: ", false);
         int maxSize = inputValidator.readInt("Максимальное количество для загрузки [1-100]: ", 1, 100);
-//        FillingStrategy strategy = new FileFillingStrategy(filename);
-//        dataStorage.setCars(strategy.fill(maxSize));
+        DataProviderStrategy<Car> fileDataProvider = DataProviderFactory.createFileDataProvider(filename, parser);
+        System.out.println((fileDataProvider.provideData(maxSize)));
+        dataStorage.addAll(fileDataProvider.provideData(maxSize));
         System.out.println("Загружено автомобилей: " + dataStorage.size());
     }
 
@@ -68,6 +83,10 @@ public class MenuActionHandler {
         }
 
         dataStorage.sortWithParity(new NaturalBubbleSortForEvenStrategy(), fieldExtractor);
+    }
+
+    public void clearData() {
+        dataStorage.clear();
     }
 
     public void handleSaveToFile() {

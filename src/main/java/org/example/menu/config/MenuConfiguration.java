@@ -9,7 +9,7 @@ public class MenuConfiguration {
         return new Menu.Builder("Car sorting")
                 .addSubmenu("Filling methods", submenu -> {
                     submenu.addAction("Random filing", actions::handleRandomFill)
-                            .addAction("Filling from a file", actions::handleRandomFill)
+                            .addAction("Filling from a file", actions::handleFileFill)
                             .addAction("Manual filling", actions::handleManualFill);
                 })
                 .addAction("Show data", actions::handleDisplay)
@@ -37,6 +37,7 @@ public class MenuConfiguration {
                     });
                 })
                 .addAction("Save to file", actions::handleSaveToFile)
+                .addAction("Delete all data", actions::clearData)
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import org.example.sorting.StrategySort;
 import org.example.util.CustomArrayList;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.ToIntFunction;
 
 public class DataStorage {
@@ -27,7 +28,12 @@ public class DataStorage {
         cars.add(car);
     }
 
+    public void addAll(List<Car> cars) {
+        this.cars.addAll(cars);
+    }
+
     public void clear() {
+        System.out.println("Удалено " + cars.size() + " объектов.");
         cars.clear();
     }
 

@@ -4,29 +4,27 @@ import org.example.util.CustomArrayList;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class FileDataProviderStrategy<T> implements DataProviderStrategy<T> {
 
     private final String filePath;
     private final Parser<T> parser;
-    private final String consoleMessage;
 
-    public FileDataProviderStrategy(String filePath, Parser<T> parser, String consoleMessage) {
+    public FileDataProviderStrategy(String filePath, Parser<T> parser) {
         this.filePath = filePath;
         this.parser = parser;
-        this.consoleMessage = consoleMessage;
     }
 
     @Override
     public CustomArrayList<T> provideData(int size) {
         CustomArrayList<T> data = new CustomArrayList<>();
         try {
-            System.out.println(consoleMessage);
             BufferedReader bufferedReader = new BufferedReader(new java.io.FileReader(filePath));
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
+            int linesCount = 0;
+            while ((line = bufferedReader.readLine()) != null && linesCount < size) {
                 data.add(parser.parse(line));
+                linesCount++;
             }
         } catch (IOException e) {
             System.out.println("This file doesn't exist, try again");
